@@ -1,0 +1,55 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+homeassistant:
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.10.0/24
+      allow_bypass_login: true
+    - type: homeassistant
+  allowlist_external_dirs:
+    - /photos/
+
+
+sensor:
+  - platform: mqtt
+    name: cricket_temperature
+    state_topic: "/6C5ADE035C/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+  
+  - platform: mqtt
+    name: cricket_battery
+    state_topic: "/6C5ADE035C/batt"
+    value_template: "{{ value |  multiply(1000/255) | int/10 | float }}"
+    unit_of_measurement: '%'
+    device_class: battery
+
+  - platform: mqtt
+    name: moisture_sensor_alpha
+    state_topic: "/6C5ADE035C/io2"
+    value_template: "{{ 100 - ( (int(value) - 55 ) / ( 95 - 55 ) ) | multiply(100) | round(1) }}"
+    unit_of_measurement: '%'
+    force_update: true
+
+plant:
+  alpha_plant:
+    sensors:
+      moisture: sensor.moisture_sensor_alpha
+
+android_ip_webcam:
+  - host: 192.168.10.224
+    name: IP Webcam - Samsung S6
+  - host: 192.168.10.188
+    name: IP Webcam - Samsung S7

@@ -1,0 +1,27 @@
+- id: '1638458177359'
+  alias: Turn off christmas
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:00
+    id: turn-off-christmas
+  condition: []
+  action:
+  - type: turn_off
+    device_id: c92afeb58ebc89fa1cca52df2b4a4fbc
+    entity_id: switch.wyze_plug_alpha_2
+    domain: switch
+  mode: single
+- id: '1638541493335'
+  alias: turn on christmas
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - type: turn_on
+    device_id: c92afeb58ebc89fa1cca52df2b4a4fbc
+    entity_id: switch.wyze_plug_alpha_2
+    domain: switch
+  mode: single
