@@ -7,10 +7,9 @@
     id: turn-off-christmas
   condition: []
   action:
-  - type: turn_off
-    device_id: c92afeb58ebc89fa1cca52df2b4a4fbc
-    entity_id: switch.wyze_plug_alpha_2
-    domain: switch
+  - service: homeassistant.turn_off
+    target:
+      entity_id: group.christmas_lights
   mode: single
 - id: '1638541493335'
   alias: turn on christmas
@@ -20,8 +19,7 @@
     at: 07:00:00
   condition: []
   action:
-  - type: turn_on
-    device_id: c92afeb58ebc89fa1cca52df2b4a4fbc
-    entity_id: switch.wyze_plug_alpha_2
-    domain: switch
+  - service: homeassistant.turn_on
+    target:
+      entity_id: group.christmas_lights
   mode: single

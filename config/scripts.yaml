@@ -1,9 +1,8 @@
 announce_that_christmas_has_begun:
   sequence:
-  - type: turn_on
-    device_id: c92afeb58ebc89fa1cca52df2b4a4fbc
-    entity_id: switch.wyze_plug_alpha
-    domain: switch
+  - service: homeassistant.turn_on
+    target:
+      entity_id: group.christmas_lights
   - service: tts.google_translate_say
     data:
       entity_id: media_player.living_room_speakers

@@ -24,8 +24,44 @@ homeassistant:
 
 sensor:
   - platform: mqtt
-    name: cricket_temperature
-    state_topic: "/6C5ADE035C/temp"
+    name: cricket1_temp
+    state_topic: "/cricket1/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+
+  - platform: mqtt
+    name: cricket2_temp
+    state_topic: "/cricket2/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+
+  - platform: mqtt
+    name: cricket3_temp
+    state_topic: "/cricket3/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+
+  - platform: mqtt
+    name: cricket4_temp
+    state_topic: "/cricket4/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+
+  - platform: mqtt
+    name: cricket5_temp
+    state_topic: "/cricket5/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+                  
+  - platform: mqtt
+    name: cricket6_temp
+    state_topic: "/cricket6/temp"
+    unit_of_measurement: '°C'
+    device_class: temperature
+
+  - platform: mqtt
+    name: cricket7_temp
+    state_topic: "/cricket7/temp"
     unit_of_measurement: '°C'
     device_class: temperature
   
@@ -39,14 +75,22 @@ sensor:
   - platform: mqtt
     name: moisture_sensor_alpha
     state_topic: "/6C5ADE035C/io2"
-    value_template: "{{ 100 - ( (int(value) - 55 ) / ( 95 - 55 ) ) | multiply(100) | round(1) }}"
-    unit_of_measurement: '%'
     force_update: true
+      #value_template: "{{ 100 - ( (int(value) - 55 ) / ( 95 - 55 ) ) | multiply(100) | round(1) }}"
+      #unit_of_measurement: '%'
+
+compensation:
+  cricket_moisture:
+    source: sensor.moisture_sensor_alpha
+    unit_of_measurement: '%'
+    data_points:
+      - [93, 0]
+      - [52, 100]
 
 plant:
   alpha_plant:
     sensors:
-      moisture: sensor.moisture_sensor_alpha
+      moisture: sensor.compensation_sensor_moisture_sensor_alpha
 
 android_ip_webcam:
   - host: 192.168.10.224
